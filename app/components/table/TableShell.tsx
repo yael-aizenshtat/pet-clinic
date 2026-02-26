@@ -10,7 +10,7 @@ export function TableShell({ table }: Props) {
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
       <div className="overflow-x-auto">
         <table className="min-w-full text-left text-sm">
-          <thead className="border-b border-gray-200 bg-gray-50">
+          <thead className="bg-gradient-to-r from-indigo-500 to-purple-600 px-6 py-4">
             {table.getHeaderGroups().map((hg) => (
               <tr key={hg.id}>
                 {hg.headers.map((h) => (

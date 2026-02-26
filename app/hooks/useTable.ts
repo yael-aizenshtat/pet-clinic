@@ -9,7 +9,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import type { Patient } from "~/types/patient";
-import { buildPatientColumns } from "~/components/table/columns";
+import { buildPatientColumns } from "~/components/table/Columns";
 
 type UseTableArgs = {
   data: Patient[];

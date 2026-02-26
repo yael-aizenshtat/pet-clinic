@@ -5,7 +5,6 @@ import { PatientsToolbar } from "../patients/PatientsToolbar";
 import { ErrorState } from "../patients/ErrorState";
 import { LoadingState } from "../patients/LoadingState";
 import { EmptyState } from "../patients/EmptyState";
-import { PaginationBar } from "../patients/PaginationBar";
 
 type Props = {
   data: Patient[];
@@ -51,10 +50,7 @@ export default function PatientsTable({
       {data.length === 0 ? (
         <EmptyState onAdd={onAdd} />
       ) : (
-        <>
-          <TableShell table={table} />
-          <PaginationBar table={table} />
-        </>
+        <TableShell table={table} />
       )}
     </div>
   );

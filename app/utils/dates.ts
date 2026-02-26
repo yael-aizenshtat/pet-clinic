@@ -1,10 +1,12 @@
-export function calcAgeFromBirthDate(isoDate: string): number {
-    const d = new Date(isoDate);
-    if (Number.isNaN(d.getTime())) return 0;
-  
+import { differenceInYears, differenceInMonths, parseISO } from "date-fns";
+
+export function calcAgeFromBirthDate(birthDate: string): string {
+    if (!birthDate) return 'Unknown';
+    const birth = typeof birthDate === 'string' ? parseISO(birthDate) : new Date(birthDate);
     const now = new Date();
-    let age = now.getFullYear() - d.getFullYear();
-    const m = now.getMonth() - d.getMonth();
-    if (m < 0 || (m === 0 && now.getDate() < d.getDate())) age--;
-    return Math.max(age, 0);
+    const years = differenceInYears(now, birth);
+    const months = differenceInMonths(now, birth) % 12;
+    if (years === 0) return months === 1 ? '1 month' : `${months} months`;
+    if (months === 0) return years === 1 ? '1 year' : `${years} years`;
+    return `${years === 1 ? '1 year' : `${years} years`}, ${months === 1 ? '1 month' : `${months} months`}`;
   }

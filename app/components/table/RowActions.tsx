@@ -1,33 +1,25 @@
 import type { Patient } from "~/types/patient";
+import { Button } from "../ui/Button";
+import { Pencil, Trash2 } from "lucide-react";
 
 type Props = {
-  patient: Patient;
-  onEdit: (p: Patient) => void;
-  onDelete: (id: string) => void;
-  deleting: boolean;
+    patient: Patient;
+    onEdit: (p: Patient) => void;
+    onDelete: (id: string) => void;
+    deleting: boolean;
 };
 
 export function RowActions({ patient, onEdit, onDelete, deleting }: Props) {
-  return (
-    <div className="flex items-center justify-end gap-2">
-      <button
-        type="button"
-        onClick={() => onEdit(patient)}
-        className="rounded-lg border border-gray-200 px-2 py-1 text-xs hover:bg-gray-50"
-      >
-        ✏️ Edit
-      </button>
-
-      <button
-        type="button"
-        disabled={deleting}
-        onClick={() => onDelete(patient.id)}
-        className="rounded-lg border border-gray-200 px-2 py-1 text-xs hover:bg-gray-50 disabled:opacity-50"
-        aria-label="Delete patient"
-        title="Delete"
-      >
-        🗑️
-      </button>
-    </div>
-  );
+    return (
+        <div className="flex items-center gap-1">
+            <Button variant="ghost" size="sm" disabled={deleting} onClick={() => onEdit(patient)}
+                className="text-gray-600 hover:text-indigo-600 hover:bg-indigo-50">
+                <Pencil className="w-4 h-4 mr-1" /> Edit
+            </Button>
+            <Button variant="ghost" size="sm" onClick={() => onDelete(patient.id)}
+                className="text-gray-600 hover:text-red-600 hover:bg-red-50">
+                <Trash2 className="w-4 h-4 mr-1" /> Delete
+            </Button>
+        </div>
+    );
 }

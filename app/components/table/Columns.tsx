@@ -34,13 +34,13 @@ export function buildPatientColumns({
       id: "petAge",
       header: "Pet Age",
       accessorFn: (row) => calcAgeFromBirthDate(row.petBirthDate),
-      cell: (ctx) => <span className="tabular-nums">{ctx.getValue<number>()}</span>,
+      cell: (ctx) => <span className="tabular-nums">{ctx.getValue<string>()}</span>,
       sortingFn: "basic",
     },
     {
       accessorKey: "petType",
       header: "Pet Type",
-      cell: (ctx) => <PatientTypePill value={ctx.getValue<Patient["petType"]>()} />,
+      cell: (ctx) => <PatientTypePill type={ctx.getValue<Patient["petType"]>()} />,
     },
     {
       id: "actions",

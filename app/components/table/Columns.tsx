@@ -3,6 +3,8 @@ import type { Patient } from "~/types/patient";
 import { calcAgeFromBirthDate } from "~/utils/dates";
 import { RowActions } from "./RowActions";
 import { PatientTypePill } from "../patients/PatientTypePill";
+import { petTypeOptions } from "~/schemas/patient.schema";
+import { enumMultiFilter } from "~/utils/enum-multi-filter";
 
 type BuildColumnsArgs = {
   onEdit: (p: Patient) => void;
@@ -24,6 +26,8 @@ export function buildPatientColumns({
     {
       accessorKey: "phone",
       header: "Phone",
+      enableSorting: false,
+      enableColumnFilter: false,
       cell: (ctx) => <span className="tabular-nums">{ctx.getValue<string>()}</span>,
     },
     {
@@ -33,14 +37,20 @@ export function buildPatientColumns({
     {
       id: "petAge",
       header: "Pet Age",
+      enableSorting: false,
+      enableColumnFilter: false,
       accessorFn: (row) => calcAgeFromBirthDate(row.petBirthDate),
-      cell: (ctx) => <span className="tabular-nums">{ctx.getValue<string>()}</span>,
-      sortingFn: "basic",
+      cell: (ctx) => <span className="tabular-nums">{ctx.getValue<string>()}</span>
     },
     {
       accessorKey: "petType",
       header: "Pet Type",
       cell: (ctx) => <PatientTypePill type={ctx.getValue<Patient["petType"]>()} />,
+      filterFn: enumMultiFilter,
+      meta: {
+        filterVariant: "enum",
+        enumOptions: petTypeOptions,
+      },
     },
     {
       id: "actions",

@@ -1,5 +1,6 @@
 import { Search, X } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useDebounce } from "~/hooks/useDebounce";
 import { cn } from "~/utils/cn";
 
 type Props = {
@@ -10,6 +11,7 @@ type Props = {
   placeholder?: string;
   className?: string;
   showClear?: boolean;
+  debounceMs?: number;
 };
 
 export const TextFilterDropdown = ({
@@ -20,9 +22,22 @@ export const TextFilterDropdown = ({
   placeholder = "Search...",
   className,
   showClear = true,
+  debounceMs = 300,
 }: Props) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const [internalValue, setInternalValue] = useState(value);
+
+  useEffect(() => {
+    setInternalValue(value);
+  }, [value]);
+
+  const debouncedValue = useDebounce(internalValue, debounceMs);
+
+  useEffect(() => {
+    if (debouncedValue === value) return;
+    onChange(debouncedValue);
+  }, [debouncedValue, value, onChange]);
 
   useEffect(() => {
     if (!open) return;
@@ -53,7 +68,10 @@ export const TextFilterDropdown = ({
 
   if (!open) return null;
 
-  const clear = () => onChange("");
+  const clear = () => {
+    setInternalValue("");
+    onChange("");
+  };
 
   return (
     <div
@@ -70,12 +88,12 @@ export const TextFilterDropdown = ({
         <Search className="h-4 w-4 text-gray-500" aria-hidden="true" />
         <input
           ref={inputRef}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
+          value={internalValue}
+          onChange={(e) => setInternalValue(e.target.value)}
           placeholder={placeholder}
           className="w-full bg-transparent text-sm text-gray-900 placeholder:text-gray-400 outline-none"
         />
-        {showClear && value.length > 0 && (
+        {showClear && internalValue.length > 0 && (
           <button
             type="button"
             onClick={clear}

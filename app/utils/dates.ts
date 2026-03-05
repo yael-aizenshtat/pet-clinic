@@ -10,3 +10,13 @@ export function calcAgeFromBirthDate(birthDate: string): string {
     if (months === 0) return years === 1 ? '1 year' : `${years} years`;
     return `${years === 1 ? '1 year' : `${years} years`}, ${months === 1 ? '1 month' : `${months} months`}`;
   }
+
+  export function isNotFutureDate(date: string): boolean {
+    const inputDate = new Date(date);
+    const today = new Date();
+  
+    today.setHours(0, 0, 0, 0);
+    inputDate.setHours(0, 0, 0, 0);
+  
+    return inputDate <= today;
+  }

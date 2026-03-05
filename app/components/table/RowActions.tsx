@@ -1,6 +1,6 @@
 import type { Patient } from "~/types/patient";
-import { Button } from "../ui/Button";
 import { Pencil, Trash2 } from "lucide-react";
+import Button from "../ui/Button";
 
 type Props = {
     patient: Patient;

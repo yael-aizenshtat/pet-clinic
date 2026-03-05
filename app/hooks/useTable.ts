@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   getCoreRowModel,
   getFilteredRowModel,
@@ -10,6 +9,7 @@ import {
 } from "@tanstack/react-table";
 import type { Patient } from "~/types/patient";
 import { buildPatientColumns } from "~/components/table/Columns";
+import { useMemo, useState } from "react";
 
 type UseTableArgs = {
   data: Patient[];
@@ -19,11 +19,10 @@ type UseTableArgs = {
 };
 
 export function useTable({ data, onEdit, onDelete, isDeleting }: UseTableArgs) {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
-  const [globalFilter, setGlobalFilter] = React.useState("");
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
-  const columns = React.useMemo(
+  const columns = useMemo(
     () => buildPatientColumns({ onEdit, onDelete, isDeleting }),
     [onEdit, onDelete, isDeleting]
   );
@@ -31,25 +30,14 @@ export function useTable({ data, onEdit, onDelete, isDeleting }: UseTableArgs) {
   const table = useReactTable({
     data,
     columns,
-    state: { sorting, columnFilters, globalFilter },
+    state: { sorting, columnFilters},
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
-    onGlobalFilterChange: setGlobalFilter,
-
-    globalFilterFn: (row, _columnId, value) => {
-      const q = String(value ?? "").toLowerCase().trim();
-      if (!q) return true;
-
-      const p = row.original;
-      const haystack = `${p.name} ${p.phone} ${p.petName} ${p.petType}`.toLowerCase();
-      return haystack.includes(q);
-    },
-
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
 
-  return { table, globalFilter, setGlobalFilter };
+  return { table };
 }

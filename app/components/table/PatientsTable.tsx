@@ -2,9 +2,9 @@ import type { Patient } from "~/types/patient";
 import { useTable } from "~/hooks/useTable";
 import { TableShell } from "./TableShell";
 import { PatientsToolbar } from "../patients/PatientsToolbar";
-import { ErrorState } from "../patients/ErrorState";
-import { LoadingState } from "../patients/LoadingState";
-import { EmptyState } from "../patients/EmptyState";
+import { ErrorState } from "../states/ErrorState";
+import { LoadingState } from "../states/LoadingState";
+import { EmptyState } from "../states/EmptyState";
 
 type Props = {
   data: Patient[];
@@ -29,7 +29,7 @@ export default function PatientsTable({
   onDelete,
   isDeleting,
 }: Props) {
-  const { table, globalFilter, setGlobalFilter } = useTable({
+  const { table } = useTable({
     data,
     onEdit,
     onDelete,
@@ -42,8 +42,6 @@ export default function PatientsTable({
   return (
     <div className="space-y-3">
       <PatientsToolbar
-        globalFilter={globalFilter}
-        onGlobalFilterChange={setGlobalFilter}
         onAdd={onAdd}
       />
 

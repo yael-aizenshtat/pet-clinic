@@ -13,3 +13,6 @@ export type Patient = {
 
 export type PatientCreateInput = Omit<Patient, "id" | "createdAt" | "updatedAt">;
 export type PatientUpdateInput = Partial<PatientCreateInput>;
+
+export type PatientFormValues = PatientCreateInput;
+export type PatientModalMode = "create" | "edit";

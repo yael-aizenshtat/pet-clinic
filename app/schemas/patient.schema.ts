@@ -33,12 +33,10 @@ export const petTypeOptions = [
   { label: "🦜 Parrot", value: "Parrot" },
 ] as const satisfies ReadonlyArray<{ label: string; value: PetType }>;
 
-export function getEmptyPatientValues(): PatientFormValues {
-  return {
-    name: "",
-    phone: "",
-    petName: "",
-    petBirthDate: "",
-    petType: "Dog",
-  };
-}
+export const getEmptyPatientValues = (): PatientFormValues => ({
+  name: "",
+  phone: "",
+  petName: "",
+  petBirthDate: "",
+  petType: "Dog",
+});

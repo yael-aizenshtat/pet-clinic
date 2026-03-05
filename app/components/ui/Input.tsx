@@ -4,7 +4,7 @@ export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   error?: string;
 };
 
-export default function Input({ error, className, ...props }: InputProps) {
+export const Input = ({ error, className, ...props }: InputProps) => {
   return (
     <div>
       <input
@@ -19,4 +19,4 @@ export default function Input({ error, className, ...props }: InputProps) {
       {error && <p className="mt-1 text-xs text-rose-600">{error}</p>}
     </div>
   );
-}
+};

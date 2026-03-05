@@ -18,7 +18,7 @@ type Props = {
   isDeleting?: (id: string) => boolean;
 };
 
-export default function PatientsTable({
+export const PatientsTable = ({
   data,
   isLoading,
   isError,
@@ -28,7 +28,7 @@ export default function PatientsTable({
   onEdit,
   onDelete,
   isDeleting,
-}: Props) {
+}: Props) => {
   const { table } = useTable({
     data,
     onEdit,
@@ -52,4 +52,4 @@ export default function PatientsTable({
       )}
     </div>
   );
-}
+};

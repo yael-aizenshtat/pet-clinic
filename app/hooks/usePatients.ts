@@ -6,35 +6,34 @@ const keys = {
   patients: ["patients"] as const,
 };
 
-export function usePatients(opts?: { initialData?: Patient[] }) {
-    return useQuery({
-      queryKey: keys.patients,
-      queryFn: () => patientsApi.list(),
-      initialData: opts?.initialData,
-    });
-  }
+export const usePatients = (opts?: { initialData?: Patient[] }) =>
+  useQuery({
+    queryKey: keys.patients,
+    queryFn: () => patientsApi.list(),
+    initialData: opts?.initialData,
+  });
 
-export function useCreatePatient() {
+export const useCreatePatient = () => {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (payload: PatientCreateInput) => patientsApi.create(payload),
     onSuccess: () => qc.invalidateQueries({ queryKey: keys.patients }),
   });
-}
+};
 
-export function useUpdatePatient() {
+export const useUpdatePatient = () => {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (args: { id: string; patch: PatientUpdateInput }) =>
       patientsApi.update(args.id, args.patch),
     onSuccess: () => qc.invalidateQueries({ queryKey: keys.patients }),
   });
-}
+};
 
-export function useDeletePatient() {
+export const useDeletePatient = () => {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => patientsApi.remove(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: keys.patients }),
   });
-}
+};

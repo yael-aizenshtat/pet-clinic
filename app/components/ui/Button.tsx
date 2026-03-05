@@ -25,7 +25,7 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   isLoading?: boolean;
 };
 
-export default function Button({
+export const Button = ({
   variant = "primary",
   size = "md",
   isLoading,
@@ -33,7 +33,7 @@ export default function Button({
   className,
   children,
   ...props
-}: ButtonProps) {
+}: ButtonProps) => {
   const isDisabled = disabled || isLoading;
 
   return (
@@ -58,4 +58,4 @@ export default function Button({
       {children}
     </button>
   );
-}
+};

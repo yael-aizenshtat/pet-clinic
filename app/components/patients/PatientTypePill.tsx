@@ -22,18 +22,20 @@ const petConfig = {
   }
 };
 
-export function PatientTypePill({ type }: { type: PetType }) {
+export const PatientTypePill = ({ type }: { type: PetType }) => {
   const config = petConfig[type] || petConfig.Dog;
 
   return (
-    <span className={cn(
-      "inline-flex items-center gap-1.5 rounded-full border font-medium text-sm px-2.5 py-1",
-      config.bgColor,
-      config.textColor,
-      config.borderColor
-    )}>
+    <span
+      className={cn(
+        "inline-flex items-center gap-1.5 rounded-full border font-medium text-sm px-2.5 py-1",
+        config.bgColor,
+        config.textColor,
+        config.borderColor,
+      )}
+    >
       <span className="text-base">{config.emoji}</span>
       <span>{type}</span>
     </span>
   );
-}
+};

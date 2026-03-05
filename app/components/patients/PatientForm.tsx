@@ -1,8 +1,8 @@
-import Input from "~/components/ui/Input";
-import Select from "~/components/ui/Select";
 import { petTypeOptions, type PatientFormValues } from "~/schemas/patient.schema";
-import Field from "../ui/Field";
 import { Calendar, PawPrint, Phone, User } from "lucide-react";
+import { Field } from "../ui/Field";
+import { Input } from "../ui/Input";
+import { Select } from "../ui/Select";
 
 export type PatientFormProps = {
   values: PatientFormValues;
@@ -11,14 +11,16 @@ export type PatientFormProps = {
   disabled?: boolean;
 };
 
-export default function PatientForm({
+export const PatientForm = ({
   values,
   onChange,
   errors,
   disabled,
-}: PatientFormProps) {
-  const set = <K extends keyof PatientFormValues>(key: K, value: PatientFormValues[K]) =>
-    onChange({ ...values, [key]: value });
+}: PatientFormProps) => {
+  const set = <K extends keyof PatientFormValues>(
+    key: K,
+    value: PatientFormValues[K],
+  ) => onChange({ ...values, [key]: value });
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -85,4 +87,4 @@ export default function PatientForm({
       </div>
     </div>
   );
-}
+};

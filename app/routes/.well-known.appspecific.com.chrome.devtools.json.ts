@@ -1,5 +1,4 @@
 import type { LoaderFunctionArgs } from "react-router";
 
-export async function loader({ request }: LoaderFunctionArgs) {
-  return new Response(null, { status: 204 });
-}
+export const loader = async ({ request }: LoaderFunctionArgs) =>
+  new Response(null, { status: 204 });

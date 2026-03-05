@@ -18,7 +18,12 @@ type UseTableArgs = {
   isDeleting?: (id: string) => boolean;
 };
 
-export function useTable({ data, onEdit, onDelete, isDeleting }: UseTableArgs) {
+export const useTable = ({
+  data,
+  onEdit,
+  onDelete,
+  isDeleting,
+}: UseTableArgs) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -40,4 +45,4 @@ export function useTable({ data, onEdit, onDelete, isDeleting }: UseTableArgs) {
   });
 
   return { table };
-}
+};

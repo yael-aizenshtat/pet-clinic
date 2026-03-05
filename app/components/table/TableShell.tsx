@@ -5,7 +5,7 @@ import { TableBodyRow } from "./TableBodyRow";
 
 type Props = { table: Table<Patient> };
 
-export function TableShell({ table }: Props) {
+export const TableShell = ({ table }: Props) => {
   return (
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
       <div className="overflow-x-auto">
@@ -29,4 +29,4 @@ export function TableShell({ table }: Props) {
       </div>
     </div>
   );
-}
+};

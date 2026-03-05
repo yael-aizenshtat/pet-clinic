@@ -1,6 +1,3 @@
-import Modal from "~/components/ui/Modal";
-import PatientForm from "./PatientForm";
-
 import {
   getEmptyPatientValues,
   patientCreateSchema,
@@ -13,11 +10,18 @@ import type {
 } from "~/schemas/patient.schema";
 
 import { useEffect, useState } from "react";
-import Button from "../ui/Button";
-import { getPrimaryDescription, getPrimaryIcon, getPrimaryText, getTitle } from "~/utils/state-management";
+import {
+  getPrimaryDescription,
+  getPrimaryIcon,
+  getPrimaryText,
+  getTitle,
+} from "~/utils/state-management";
 import { Trash2 } from "lucide-react";
 import { buildPatch } from "~/utils/build-patch";
 import { firstError } from "~/utils/first-error";
+import { Button } from "../ui/Button";
+import { Modal } from "../ui/Modal";
+import { PatientForm } from "./PatientForm";
 
 export type PatientModalMode = "create" | "edit";
 type ZodFieldErrors = Partial<
@@ -37,7 +41,7 @@ export type PatientModalProps = {
   isDeleting?: boolean;
 };
 
-export default function PatientModal({
+export const PatientModal = ({
   open,
   mode,
   initialValues,
@@ -48,7 +52,7 @@ export default function PatientModal({
   onDelete,
   isSubmitting,
   isDeleting,
-}: PatientModalProps) {
+}: PatientModalProps) => {
   const [values, setValues] = useState<PatientCreateInput>(() =>
     mode === "edit" && initialValues ? initialValues : getEmptyPatientValues()
   );
@@ -189,4 +193,4 @@ export default function PatientModal({
       />
     </Modal>
   );
-}
+};

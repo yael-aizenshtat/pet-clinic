@@ -12,7 +12,7 @@ type Props = {
   showClear?: boolean;
 };
 
-export function TextFilterDropdown({
+export const TextFilterDropdown = ({
   open,
   onClose,
   value,
@@ -20,7 +20,7 @@ export function TextFilterDropdown({
   placeholder = "Search...",
   className,
   showClear = true,
-}: Props) {
+}: Props) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -88,4 +88,4 @@ export function TextFilterDropdown({
       </div>
     </div>
   );
-}
+};

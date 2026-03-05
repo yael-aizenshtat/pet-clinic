@@ -19,7 +19,7 @@ export type ModalProps = {
   size?: ModalSize;
 };
 
-export default function Modal({
+export const Modal = ({
   open,
   onClose,
   title,
@@ -27,7 +27,7 @@ export default function Modal({
   children,
   footer,
   size = "md",
-}: ModalProps) {
+}: ModalProps) => {
   useEffect(() => {
     if (!open) return;
 
@@ -83,4 +83,4 @@ export default function Modal({
       </div>
     </div>
   );
-}
+};

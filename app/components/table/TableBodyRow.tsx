@@ -1,10 +1,11 @@
+import { memo } from "react";
 import type { Row } from "@tanstack/react-table";
 import { flexRender } from "@tanstack/react-table";
 import type { Patient } from "~/types/patient";
 
 type Props = { row: Row<Patient> };
 
-export function TableBodyRow({ row }: Props) {
+export const TableBodyRow = memo(function TableBodyRow({ row }: Props) {
   return (
     <tr className="border-b border-gray-100 last:border-0 hover:bg-gray-50/60">
       {row.getVisibleCells().map((cell) => (
@@ -14,4 +15,4 @@ export function TableBodyRow({ row }: Props) {
       ))}
     </tr>
   );
-}
+});

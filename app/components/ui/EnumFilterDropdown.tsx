@@ -15,14 +15,14 @@ type Props<T extends string> = {
   className?: string;
 };
 
-export function EnumFilterDropdown<T extends string>({
+export const EnumFilterDropdown = <T extends string>({
   open,
   onClose,
   options,
   value,
   onChange,
   className,
-}: Props<T>) {
+}: Props<T>) => {
   const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -99,4 +99,4 @@ export function EnumFilterDropdown<T extends string>({
       </div>
     </div>
   );
-}
+};

@@ -12,11 +12,11 @@ type BuildColumnsArgs = {
   isDeleting?: (id: string) => boolean;
 };
 
-export function buildPatientColumns({
+export const buildPatientColumns = ({
   onEdit,
   onDelete,
   isDeleting,
-}: BuildColumnsArgs): ColumnDef<Patient>[] {
+}: BuildColumnsArgs): ColumnDef<Patient>[] => {
   return [
     {
       accessorKey: "name",
@@ -66,4 +66,4 @@ export function buildPatientColumns({
       ),
     },
   ];
-}
+};

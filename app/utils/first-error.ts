@@ -1,3 +1,1 @@
-export function firstError(err?: string[]) {
-    return err?.[0];
-}
+export const firstError = (err?: string[]) => err?.[0];

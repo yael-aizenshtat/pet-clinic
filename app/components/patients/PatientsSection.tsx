@@ -6,28 +6,17 @@ import {
 } from "~/hooks/usePatients";
 
 import type { Patient } from "~/types/patient";
-import type { PatientCreateInput } from "~/schemas/patient.schema";
-
-import PatientsTable from "../table/PatientsTable";
-import PatientModal from "./PatientModal";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { toFormValues } from "~/utils/to-form-values";
+import { PatientModal } from "./PatientModal";
+import { PatientsTable } from "../table/PatientsTable";
 
 type ModalState =
   | { open: false; mode: "create" | "edit"; patient: null }
   | { open: true; mode: "create"; patient: null }
   | { open: true; mode: "edit"; patient: Patient };
 
-function toFormValues(p: Patient): PatientCreateInput {
-  return {
-    name: p.name,
-    phone: p.phone,
-    petName: p.petName,
-    petBirthDate: p.petBirthDate,
-    petType: p.petType,
-  };
-}
-
-export default function PatientsSection() {
+export const PatientsSection = () => {
   const { data, isLoading, isError, error, refetch } = usePatients();
   const { mutate: createPatient } = useCreatePatient();
   const { mutate: updatePatient } = useUpdatePatient();
@@ -41,14 +30,13 @@ export default function PatientsSection() {
     patient: null,
   });
 
-  const openAdd = () =>{
+  const openAdd = () => {
     setModal({ open: true, mode: "create", patient: null });
+  };
 
-  }
-
-  const openEdit = (p: Patient) =>{
+  const openEdit = (p: Patient) => {
     setModal({ open: true, mode: "edit", patient: p });
-  }
+  };
 
   const closeModal = () =>
     setModal((prev) => ({ ...prev, open: false, patient: null }));
@@ -83,4 +71,4 @@ export default function PatientsSection() {
       />
     </>
   );
-}
+};

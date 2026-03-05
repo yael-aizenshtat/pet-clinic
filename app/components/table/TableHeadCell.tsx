@@ -9,7 +9,7 @@ import { DropdownPortal } from "../ui/DropDownPortal";
 
 type Props = { header: Header<Patient, unknown> };
 
-export function TableHeadCell({ header }: Props) {
+export const TableHeadCell = ({ header }: Props) => {
   const canSort = header.column.getCanSort();
   const sortDir = header.column.getIsSorted();
   const canFilter = header.column.getCanFilter();
@@ -37,7 +37,6 @@ export function TableHeadCell({ header }: Props) {
 
   const isEnumFilter = meta?.filterVariant === "enum" && meta.enumOptions?.length;
   const selectedEnumValues = (Array.isArray(filterValue) ? filterValue : []) as string[];
-
 
   return (
     <th className="px-4 py-3 font-semibold text-white relative">

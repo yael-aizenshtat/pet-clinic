@@ -8,7 +8,7 @@ export type SelectProps = SelectHTMLAttributes<HTMLSelectElement> & {
   error?: string;
 };
 
-export default function Select({ options, error, className, ...props }: SelectProps) {
+export const Select = ({ options, error, className, ...props }: SelectProps) => {
   return (
     <div>
       <select
@@ -29,4 +29,4 @@ export default function Select({ options, error, className, ...props }: SelectPr
       {error && <p className="mt-1 text-xs text-rose-600">{error}</p>}
     </div>
   );
-}
+};

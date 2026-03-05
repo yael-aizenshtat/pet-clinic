@@ -1,10 +1,10 @@
-export default function Label({
+export const Label = ({
   children,
   htmlFor,
 }: {
   children: React.ReactNode;
   htmlFor?: string;
-}) {
+}) => {
   return (
     <label
       htmlFor={htmlFor}
@@ -13,4 +13,4 @@ export default function Label({
       {children}
     </label>
   );
-}
+};

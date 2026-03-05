@@ -18,48 +18,45 @@ export type PatientDocument = {
 
 const COLLECTION_NAME = "patients";
 
-async function getPatientsCollection(): Promise<Collection<PatientDocument>> {
+const getPatientsCollection = async (): Promise<Collection<PatientDocument>> => {
   const db = await getDb();
   return db.collection<PatientDocument>(COLLECTION_NAME);
-}
+};
 
-function toPatient(doc: WithId<PatientDocument>): Patient {
-  return {
-    id: doc._id.toString(),
-    name: doc.name,
-    phone: doc.phone,
-    petName: doc.petName,
-    petBirthDate: doc.petBirthDate,
-    petType: doc.petType as Patient["petType"],
-    createdAt: doc.createdAt,
-    updatedAt: doc.updatedAt,
-  };
-}
+const toPatient = (doc: WithId<PatientDocument>): Patient => ({
+  id: doc._id.toString(),
+  name: doc.name,
+  phone: doc.phone,
+  petName: doc.petName,
+  petBirthDate: doc.petBirthDate,
+  petType: doc.petType as Patient["petType"],
+  createdAt: doc.createdAt,
+  updatedAt: doc.updatedAt,
+});
 
-function nowIso(): string {
-  return new Date().toISOString();
-}
+const nowIso = (): string => new Date().toISOString();
 
-function toObjectId(id: string): ObjectId | null {
-  return ObjectId.isValid(id) ? new ObjectId(id) : null;
-}
+const toObjectId = (id: string): ObjectId | null =>
+  ObjectId.isValid(id) ? new ObjectId(id) : null;
 
-export async function listPatients(): Promise<Patient[]> {
+export const listPatients = async (): Promise<Patient[]> => {
   const col = await getPatientsCollection();
   const docs = await col.find({}).sort({ createdAt: -1 }).toArray();
   return docs.map(toPatient);
-}
+};
 
-export async function getPatientById(id: string): Promise<Patient | null> {
+export const getPatientById = async (id: string): Promise<Patient | null> => {
   const _id = toObjectId(id);
   if (!_id) return null;
 
   const col = await getPatientsCollection();
   const doc = await col.findOne({ _id });
   return doc ? toPatient(doc) : null;
-}
+};
 
-export async function createPatient(input: PatientCreateInput): Promise<Patient> {
+export const createPatient = async (
+  input: PatientCreateInput,
+): Promise<Patient> => {
   const col = await getPatientsCollection();
   const now = nowIso();
 
@@ -75,12 +72,12 @@ export async function createPatient(input: PatientCreateInput): Promise<Patient>
 
   const res = await col.insertOne(doc);
   return toPatient({ ...doc, _id: res.insertedId });
-}
+};
 
-export async function updatePatient(
+export const updatePatient = async (
   id: string,
   patch: PatientUpdateInput
-): Promise<Patient | null> {
+): Promise<Patient | null> => {
   const _id = toObjectId(id);
   if (!_id) return null;
 
@@ -104,13 +101,13 @@ export async function updatePatient(
   );
 
   return res ? toPatient(res) : null;
-}
+};
 
-export async function deletePatient(id: string): Promise<boolean> {
+export const deletePatient = async (id: string): Promise<boolean> => {
   const _id = toObjectId(id);
   if (!_id) return false;
 
   const col = await getPatientsCollection();
   const res = await col.deleteOne({ _id });
   return res.deletedCount === 1;
-}
+};

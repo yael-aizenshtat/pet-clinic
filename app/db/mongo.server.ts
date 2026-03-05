@@ -10,10 +10,10 @@ declare global {
   var __mongoClientPromise: Promise<MongoClient> | undefined;
 }
 
-export function getMongoClient(): Promise<MongoClient> {
+export const getMongoClient = (): Promise<MongoClient> => {
   if (!global.__mongoClientPromise) {
     const client = new MongoClient(mongoUri);
     global.__mongoClientPromise = client.connect();
   }
   return global.__mongoClientPromise;
-}
+};

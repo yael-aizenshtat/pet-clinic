@@ -11,14 +11,14 @@ type Props = {
   width?: number;
 };
 
-export function DropdownPortal({
+export const DropdownPortal = ({
   open,
   anchorEl,
   onClose,
   children,
   offset = 8,
   width,
-}: Props) {
+}: Props) => {
   const [pos, setPos] = useState<{ top: number; left: number; w: number }>({
     top: 0,
     left: 0,
@@ -86,4 +86,4 @@ export function DropdownPortal({
   );
 
   return createPortal(portal, document.body);
-}
+};

@@ -26,18 +26,10 @@ export const TextFilterDropdown = ({
 }: Props) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const skipNextDebounceRef = useRef(false);
+
   const [internalValue, setInternalValue] = useState(value);
-
-  useEffect(() => {
-    setInternalValue(value);
-  }, [value]);
-
   const debouncedValue = useDebounce(internalValue, debounceMs);
-
-  useEffect(() => {
-    if (debouncedValue === value) return;
-    onChange(debouncedValue);
-  }, [debouncedValue, value, onChange]);
 
   useEffect(() => {
     if (!open) return;
@@ -60,25 +52,37 @@ export const TextFilterDropdown = ({
 
     document.addEventListener("pointerdown", onPointerDown, true);
     document.addEventListener("keydown", onKeyDown);
+
     return () => {
       document.removeEventListener("pointerdown", onPointerDown, true);
       document.removeEventListener("keydown", onKeyDown);
     };
   }, [open, onClose]);
 
+  useEffect(() => {
+    if (skipNextDebounceRef.current) {
+      skipNextDebounceRef.current = false;
+      return;
+    }
+
+    if (debouncedValue === value) return;
+    onChange(debouncedValue);
+  }, [debouncedValue, value, onChange]);
+
   if (!open) return null;
 
   const clear = () => {
+    skipNextDebounceRef.current = true;
     setInternalValue("");
     onChange("");
+    inputRef.current?.focus();
   };
 
   return (
     <div
       ref={ref}
       className={cn(
-        "absolute z-50 mt-2 w-56 rounded-2xl bg-white shadow-xl ring-1 ring-black/5",
-        "p-3",
+        "absolute z-50 mt-2 w-56 rounded-2xl bg-white p-3 shadow-xl ring-1 ring-black/5",
         className
       )}
       role="dialog"
@@ -86,6 +90,7 @@ export const TextFilterDropdown = ({
     >
       <div className="flex items-center gap-2 rounded-xl bg-gray-50 px-3 py-2 ring-1 ring-gray-200 focus-within:ring-2 focus-within:ring-indigo-500">
         <Search className="h-4 w-4 text-gray-500" aria-hidden="true" />
+
         <input
           ref={inputRef}
           value={internalValue}
@@ -93,6 +98,7 @@ export const TextFilterDropdown = ({
           placeholder={placeholder}
           className="w-full bg-transparent text-sm text-gray-900 placeholder:text-gray-400 outline-none"
         />
+
         {showClear && internalValue.length > 0 && (
           <button
             type="button"

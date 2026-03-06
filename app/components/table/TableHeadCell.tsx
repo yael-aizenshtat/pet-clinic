@@ -99,22 +99,24 @@ export const TableHeadCell = ({ header }: Props) => {
         </DropdownPortal>
       )}
 
-      {showFilter && isEnumFilter && (
-        <DropdownPortal
-          open={showFilter}
-          anchorEl={anchorRef.current}
-          onClose={() => setShowFilter(false)}
-        >
-          <EnumFilterDropdown
-            open={true}
-            onClose={() => setShowFilter(false)}
-            options={meta!.enumOptions!}
-            value={selectedEnumValues}
-            onChange={(next) => header.column.setFilterValue(next)}
-            className="mt-0"
-          />
-        </DropdownPortal>
-      )}
+{showFilter && isEnumFilter && (
+  <DropdownPortal
+    open={showFilter}
+    anchorEl={anchorRef.current}
+    onClose={() => setShowFilter(false)}
+  >
+    <EnumFilterDropdown
+      open={true}
+      onClose={() => setShowFilter(false)}
+      options={meta!.enumOptions!}
+      value={selectedEnumValues}
+      onChange={(next) =>
+        header.column.setFilterValue(next.length ? next : undefined)
+      }
+      className="mt-0"
+    />
+  </DropdownPortal>
+)}
     </th>
   );
 };

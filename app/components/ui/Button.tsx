@@ -41,7 +41,7 @@ export const Button = ({
       {...props}
       disabled={isDisabled}
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-xl font-medium",
+        "inline-flex items-center justify-center gap-2 rounded-xl font-medium cursor-pointer",
         "transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
         "disabled:opacity-60 disabled:cursor-not-allowed",
         variantClass[variant],

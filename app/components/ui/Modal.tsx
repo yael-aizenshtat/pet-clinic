@@ -63,7 +63,7 @@ export const Modal = ({
         >
           <X
             onClick={onClose}
-            className="absolute right-4 top-4 text-gray-400 hover:text-gray-600"
+            className="absolute right-4 top-4 text-gray-400 hover:text-gray-600 cursor-pointer"
           />
           {(title || description) && (
             <div className="border-b border-gray-100 px-6 py-5">

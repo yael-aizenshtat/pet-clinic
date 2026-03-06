@@ -72,7 +72,7 @@ export const EnumFilterDropdown = <T extends string>({
         <button
           type="button"
           onClick={clear}
-          className="text-xs text-gray-600 hover:text-gray-900"
+          className="text-xs text-gray-600 hover:text-gray-900 cursor-pointer"
         >
           Clear
         </button>

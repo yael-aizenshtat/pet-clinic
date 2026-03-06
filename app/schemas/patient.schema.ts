@@ -1,12 +1,20 @@
 import { z } from "zod";
 import { isNotFutureDate } from "~/utils/dates";
 
-export const petTypeSchema = z.enum(["Dog", "Cat", "Parrot"]);
+const petTypeSchema = z.enum(["Dog", "Cat", "Parrot"]);
+
+const phoneSchema = z
+  .string()
+  .trim()
+  .min(1, "Phone is required")
+  .regex(/^[0-9]+$/, "Phone must contain only digits")
+  .min(9, "Phone is too short")
+  .max(10, "Phone is too long");
 
 export const patientCreateSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  phone: z.string().min(5, "Phone is too short"),
-  petName: z.string().min(1, "Pet name is required"),
+  name: z.string().trim().min(1, "Name is required"),
+  phone: phoneSchema,
+  petName: z.string().trim().min(1, "Pet name is required"),
   petBirthDate: z
     .string()
     .min(4, "Birth date is required")
@@ -14,8 +22,17 @@ export const patientCreateSchema = z.object({
   petType: petTypeSchema,
 });
 
-export const patientUpdateSchema = patientCreateSchema
-  .partial()
+export const patientUpdateSchema = z.object({
+    name: z.string().trim().min(1, "Name is required").optional(),
+    phone: phoneSchema.optional(),
+    petName: z.string().trim().min(1, "Pet name is required").optional(),
+    petBirthDate: z
+      .string()
+      .min(4, "Birth date is required")
+      .refine(isNotFutureDate, "Birth date cannot be in the future")
+      .optional(),
+    petType: petTypeSchema.optional(),
+  })
   .refine((obj) => Object.keys(obj).length > 0, {
     message: "At least one field must be provided",
   });

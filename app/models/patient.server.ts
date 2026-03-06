@@ -10,8 +10,8 @@ export type PatientDocument = {
   name: string;
   phone: string;
   petName: string;
-  petBirthDate: string; 
-  petType: string; 
+  petBirthDate: string;
+  petType: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -39,6 +39,8 @@ const nowIso = (): string => new Date().toISOString();
 const toObjectId = (id: string): ObjectId | null =>
   ObjectId.isValid(id) ? new ObjectId(id) : null;
 
+const trimValue = (value: string): string => value.trim();
+
 export const listPatients = async (): Promise<Patient[]> => {
   const col = await getPatientsCollection();
   const docs = await col.find({}).sort({ createdAt: -1 }).toArray();
@@ -55,15 +57,15 @@ export const getPatientById = async (id: string): Promise<Patient | null> => {
 };
 
 export const createPatient = async (
-  input: PatientCreateInput,
+  input: PatientCreateInput
 ): Promise<Patient> => {
   const col = await getPatientsCollection();
   const now = nowIso();
 
   const doc: PatientDocument = {
-    name: input.name,
-    phone: input.phone,
-    petName: input.petName,
+    name: trimValue(input.name),
+    phone: trimValue(input.phone),
+    petName: trimValue(input.petName),
     petBirthDate: input.petBirthDate,
     petType: input.petType,
     createdAt: now,
@@ -88,9 +90,9 @@ export const updatePatient = async (
     updatedAt: now,
   };
 
-  if (patch.name !== undefined) $set.name = patch.name;
-  if (patch.phone !== undefined) $set.phone = patch.phone;
-  if (patch.petName !== undefined) $set.petName = patch.petName;
+  if (patch.name !== undefined) $set.name = trimValue(patch.name);
+  if (patch.phone !== undefined) $set.phone = trimValue(patch.phone);
+  if (patch.petName !== undefined) $set.petName = trimValue(patch.petName);
   if (patch.petBirthDate !== undefined) $set.petBirthDate = patch.petBirthDate;
   if (patch.petType !== undefined) $set.petType = patch.petType;
 

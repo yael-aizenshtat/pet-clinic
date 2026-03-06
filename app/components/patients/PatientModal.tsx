@@ -129,7 +129,6 @@ export const PatientModal = ({
       <div className="flex items-center gap-2">
         {mode === "edit" && onDelete && (
           <Button
-            type="button"
             variant="danger"
             size="sm"
             onClick={handleDelete}
@@ -144,7 +143,6 @@ export const PatientModal = ({
 
       <div className="flex items-center justify-end gap-2">
         <Button
-          type="button"
           variant="secondary"
           onClick={onClose}
           disabled={disabled}
@@ -152,7 +150,6 @@ export const PatientModal = ({
           Close
         </Button>
         <Button
-          type="button"
           onClick={handleSubmit}
           isLoading={isSubmitting}
           disabled={isDeleting}

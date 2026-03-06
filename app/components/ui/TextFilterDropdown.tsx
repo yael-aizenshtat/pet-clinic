@@ -103,7 +103,7 @@ export const TextFilterDropdown = ({
           <button
             type="button"
             onClick={clear}
-            className="rounded-lg p-1 text-gray-500 hover:bg-gray-200 hover:text-gray-700"
+            className="rounded-lg p-1 text-gray-500 hover:bg-gray-200 hover:text-gray-700 cursor-pointer"
             aria-label="Clear"
           >
             <X className="h-4 w-4" />
